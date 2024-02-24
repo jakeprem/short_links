@@ -20,6 +20,8 @@ defmodule ShortLinksWeb.Router do
     get "/stats/:slug", LinkController, :show
     get "/stats", LinkController, :stats
 
+    get "/:slug", RedirectController, :execute_link
+
     get "/", LinkController, :new
     post "/", LinkController, :create
   end

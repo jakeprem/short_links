@@ -16,6 +16,9 @@ defmodule ShortLinks.LinkEngine do
   Valid characters are a-z and 1-9.
   """
   def generate_slug do
+    # URLs are case-insensitive, so we should make sure to standardize
+    # our slugs. SQLite is case insensitive by default.
+    # I chose upcase just because I think it looks better.
     Nanoid.generate(8, @alphanumeric_characters) |> String.upcase()
   end
 
