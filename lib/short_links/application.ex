@@ -11,8 +11,7 @@ defmodule ShortLinks.Application do
       ShortLinksWeb.Telemetry,
       ShortLinks.Repo,
       {Ecto.Migrator,
-        repos: Application.fetch_env!(:short_links, :ecto_repos),
-        skip: skip_migrations?()},
+       repos: Application.fetch_env!(:short_links, :ecto_repos), skip: skip_migrations?()},
       {DNSCluster, query: Application.get_env(:short_links, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: ShortLinks.PubSub},
       # Start the Finch HTTP client for sending emails
