@@ -112,7 +112,6 @@ create link (post /)                  6.83      146.33 ms     ±9.92%      141.3
 ```
 
 ### Taxon - Go Links
-[Taxon](https://github.com/jakeprem/taxon) is a similar app implementing [Go Links](https://www.trot.to/go-links#definition), that's been running for almost a year now. The code quality
-is much worse though 😁 the focus there was getting the features I needed done as quickly as possible.
+[Taxon](https://github.com/jakeprem/taxon) is a similar app that I've written implementing [Go Links](https://www.trot.to/go-links#definition), that's been running for almost a year now. The test coverage is worse though 😁 the focus there was getting the features I needed done as quickly as possible.
 
 Go links are basically named short links you use to access common links (`go/board` -> JIRA board, `go/prs` -> Team PRs, etc)
