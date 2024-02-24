@@ -35,4 +35,33 @@ defmodule ShortLinks.LinkEngine do
     |> Link.changeset(attrs)
     |> Repo.insert()
   end
+
+  @doc """
+  Returns an `Ecto.Changeset` for the given link with the given attributes.
+
+  ## Examples
+
+      iex> link = link_fixture(link)
+      %Ecto.Changeset{data: %Link{}}
+  """
+  def change_link(link, attrs \\ %{}) do
+    Link.changeset(link, attrs)
+  end
+
+  @doc """
+  Get a single link by its id.
+
+  Returns nil if the Link is not found.
+
+  ## Examples
+
+      iex> get_link(1)
+      %Link{}
+
+      iex> get_link(999)
+      nil
+  """
+  def get_link(id) do
+    Repo.get(Link, id)
+  end
 end
