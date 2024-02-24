@@ -66,6 +66,23 @@ defmodule ShortLinks.LinkEngine do
   end
 
   @doc """
+  Gets a single link using its slug.
+
+  Returns nil if the Link is not found.
+
+  ## Examples
+
+      iex> get_link_by_slug("abcd1234")
+      %Link{}
+
+      iex> get_link_by_slug("not-a-slug")
+      nil
+  """
+  def get_link_by_slug(slug) do
+    Repo.get_by(Link, slug: slug)
+  end
+
+  @doc """
   List all links.
   """
   def list_links do

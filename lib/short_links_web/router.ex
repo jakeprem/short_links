@@ -17,7 +17,7 @@ defmodule ShortLinksWeb.Router do
   scope "/", ShortLinksWeb do
     pipe_through :browser
 
-    get "/stats/:id", LinkController, :show
+    get "/stats/:slug", LinkController, :show
     get "/stats", LinkController, :stats
 
     get "/", LinkController, :new

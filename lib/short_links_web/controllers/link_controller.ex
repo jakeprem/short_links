@@ -16,7 +16,7 @@ defmodule ShortLinksWeb.LinkController do
       {:ok, link} ->
         conn
         |> put_flash(:info, "Link created successfully.")
-        |> redirect(to: ~p"/stats/#{link.id}")
+        |> redirect(to: ~p"/stats/#{link.slug}")
 
       {:error, changeset} ->
         render(conn, :new, changeset: changeset)
@@ -34,8 +34,8 @@ defmodule ShortLinksWeb.LinkController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    case LinkEngine.get_link(id) do
+  def show(conn, %{"slug" => slug}) do
+    case LinkEngine.get_link_by_slug(slug) do
       nil ->
         conn
         |> put_flash(:error, "Link not found.")

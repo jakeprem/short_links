@@ -15,21 +15,21 @@ defmodule ShortLinksWeb.PageControllerTest do
   end
 
   describe "create link" do
-    test "redirects to stats/:id when data is valid", %{conn: conn} do
+    test "redirects to stats/:slug when data is valid", %{conn: conn} do
       conn = post(conn, ~p"/", link: @create_attrs)
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == ~p"/stats/#{id}"
+      assert %{slug: slug} = redirected_params(conn)
+      assert redirected_to(conn) == ~p"/stats/#{slug}"
 
-      conn = get(conn, ~p"/stats/#{id}")
+      conn = get(conn, ~p"/stats/#{slug}")
       assert html_response(conn, 200) =~ "Was this your link?"
     end
 
     test "slug is generated automatically in controller", %{conn: conn} do
       conn = post(conn, ~p"/", link: @create_attrs)
 
-      assert %{id: id} = redirected_params(conn)
-      link = LinkEngine.get_link(id)
+      assert %{slug: slug} = redirected_params(conn)
+      link = LinkEngine.get_link_by_slug(slug)
       assert link.slug not in [nil, ""]
     end
 
@@ -42,7 +42,7 @@ defmodule ShortLinksWeb.PageControllerTest do
   describe "show" do
     test "renders link", %{conn: conn} do
       link = link_fixture()
-      conn = get(conn, ~p"/stats/#{link.id}")
+      conn = get(conn, ~p"/stats/#{link.slug}")
 
       assert html_response(conn, 200) =~ link.destination
     end
