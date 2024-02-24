@@ -10,7 +10,11 @@ defmodule ShortLinks.LinkEngineFixtures do
   def link_fixture(attrs \\ %{}) do
     {:ok, link} =
       attrs
-      |> Enum.into(%{destination: "https://example.com", slug: LinkEngine.generate_slug()})
+      |> Enum.into(%{
+        destination: "https://example.com",
+        slug: LinkEngine.generate_slug(),
+        visits: 0
+      })
       |> LinkEngine.create_link()
 
     link

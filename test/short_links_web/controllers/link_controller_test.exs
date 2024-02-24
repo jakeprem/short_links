@@ -2,7 +2,7 @@ defmodule ShortLinksWeb.PageControllerTest do
   alias ShortLinks.LinkEngine
   use ShortLinksWeb.ConnCase
 
-  import ShortLinks.LinkEngineFixtures, only: [link_fixture: 0]
+  import ShortLinks.LinkEngineFixtures, only: [link_fixture: 0, link_fixture: 1]
 
   @create_attrs %{destination: "http://example.com"}
   @invalid_attrs %{destination: "invalid-url"}
@@ -55,7 +55,7 @@ defmodule ShortLinksWeb.PageControllerTest do
 
   describe "stats" do
     test "renders stats", %{conn: conn} do
-      links = Enum.map(1..3, fn _ -> link_fixture() end)
+      links = Enum.map(1..3, fn num -> link_fixture(%{visits: num}) end)
       conn = get(conn, ~p"/stats")
 
       assert html_response(conn, 200) =~ "Link Stats"
@@ -64,7 +64,7 @@ defmodule ShortLinksWeb.PageControllerTest do
         assert html_response(conn, 200) =~ link.destination
         assert html_response(conn, 200) =~ link.slug
         # link.count
-        assert html_response(conn, 200) =~ "NYI"
+        assert html_response(conn, 200) =~ to_string(link.visits)
       end
     end
   end

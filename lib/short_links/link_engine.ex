@@ -9,6 +9,8 @@ defmodule ShortLinks.LinkEngine do
   alias ShortLinks.LinkEngine.Link
   alias ShortLinks.Repo
 
+  import Ecto.Query
+
   @alphanumeric_characters "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
   @doc """
   Generate a random 8 character slug to be used in a short link.
@@ -69,6 +71,15 @@ defmodule ShortLinks.LinkEngine do
   end
 
   @doc """
+  Gets a single link by its id.
+
+  Raises Ecto.NoResultsError if the Link is not found.
+  """
+  def get_link!(id) do
+    Repo.get!(Link, id)
+  end
+
+  @doc """
   Gets a single link using its slug.
 
   Returns nil if the Link is not found.
@@ -90,6 +101,13 @@ defmodule ShortLinks.LinkEngine do
   List all links.
   """
   def list_links do
-    Repo.all(Link)
+    from(l in Link, order_by: [desc: l.visits])
+    |> Repo.all()
+  end
+
+  def increment_link_visits(link) do
+    link
+    |> Link.changeset(%{visits: link.visits + 1})
+    |> Repo.update()
   end
 end
