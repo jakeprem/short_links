@@ -68,4 +68,37 @@ defmodule ShortLinksWeb.PageControllerTest do
       end
     end
   end
+
+  describe "stats_csv" do
+    test "returns a CSV file", %{conn: conn} do
+      links = Enum.map(1..3, fn num -> link_fixture(%{visits: num}) end)
+      conn = get(conn, ~p"/stats/csv")
+
+      assert resp_header(conn, "content-type") =~ "text/csv"
+
+      parsed_links = LinkEngine.CSVExporter.parse_links_csv(conn.resp_body)
+
+      expected_links =
+        links
+        |> Enum.map(fn link ->
+          [
+            # Here's that unfortunate coupling again 😅
+            "http://localhost:4002/#{link.slug}",
+            link.destination,
+            to_string(link.visits),
+            "#{link.inserted_at}"
+          ]
+        end)
+        |> Enum.reverse()
+
+      assert parsed_links == expected_links
+    end
+  end
+
+  defp resp_header(conn, key) do
+    case Enum.find(conn.resp_headers, fn {k, _} -> k == key end) do
+      {_, v} -> v
+      nil -> nil
+    end
+  end
 end

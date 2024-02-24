@@ -60,7 +60,8 @@ defmodule ShortLinks.MixProject do
       {:bandit, "~> 1.2"},
       {:nanoid, "~> 2.1"},
       {:benchee, "~> 1.0", only: :dev},
-      {:req, "~> 0.4"}
+      {:req, "~> 0.4"},
+      {:nimble_csv, "~> 1.2"}
     ]
   end
 

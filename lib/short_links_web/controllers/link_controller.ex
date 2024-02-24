@@ -15,7 +15,6 @@ defmodule ShortLinksWeb.LinkController do
     case create_link_with_slug(link_params) do
       {:ok, link} ->
         conn
-        |> put_flash(:info, "Link created successfully.")
         |> redirect(to: ~p"/stats/#{link.slug}")
 
       {:error, changeset} ->
@@ -38,7 +37,6 @@ defmodule ShortLinksWeb.LinkController do
     case LinkEngine.get_link_by_slug(slug) do
       nil ->
         conn
-        |> put_flash(:error, "Link not found.")
         |> redirect(to: ~p"/")
 
       link ->
@@ -49,5 +47,30 @@ defmodule ShortLinksWeb.LinkController do
   def stats(conn, _params) do
     links = LinkEngine.list_links()
     render(conn, :stats, links: links)
+  end
+
+  def stats_csv(conn, _) do
+    # The implicit coupling of the slug to the route here isn't great.
+    # This would be a good thing to refactor.
+    conn_url = url(~p"/")
+
+    # Ideally we'd stream the whole list of links rather than load them all into memory.
+    # However, Repo.stream/2 needs to run in a transaction which has tradeoffs.
+    # Alternatively could be implemented using Stream.resource/3, which some tradeoffs around
+    # when data changes, but they shouldn't impact this use case too much.
+    link_csv_stream =
+      LinkEngine.list_links() |> LinkEngine.CSVExporter.get_links_csv_stream(conn_url)
+
+    chunked_conn =
+      conn
+      |> put_resp_content_type("text/csv")
+      |> send_chunked(200)
+
+    Enum.reduce_while(link_csv_stream, chunked_conn, fn chunk, conn ->
+      case Plug.Conn.chunk(conn, chunk) do
+        {:ok, conn} -> {:cont, conn}
+        {:error, _} -> {:halt, conn}
+      end
+    end)
   end
 end

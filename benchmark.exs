@@ -53,6 +53,14 @@ execute_link = fn ->
   Req.get("#{url}/#{slug}", redirect: false)
 end
 
+short_slugs = link_slugs |> Enum.shuffle() |> Enum.take(5)
+
+execute_contentious_links = fn ->
+  slug = Enum.random(short_slugs)
+
+  Req.get("#{url}/#{slug}", redirect: false)
+end
+
 parallel =
   case System.argv() do
     [] -> 10
@@ -63,6 +71,7 @@ Benchee.run(
   %{
     "create link (post /)" => create_link,
     "execute short link (/:slug)" => execute_link,
+    "execute contentious (/:slug)" => execute_contentious_links,
     "mixed use" => fn ->
       Enum.random([create_link, execute_link, execute_link, execute_link, execute_link]).()
     end

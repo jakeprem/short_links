@@ -11,6 +11,9 @@ defmodule ShortLinksWeb.LinkHTML do
 
   def link_form(assigns)
 
+  @doc """
+  Renders a link for the given slug.
+  """
   attr :conn, Plug.Conn, required: true
   attr :slug, :string, required: true
 
