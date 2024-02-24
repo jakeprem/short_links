@@ -22,7 +22,7 @@ defmodule ShortLinksWeb.PageControllerTest do
       assert redirected_to(conn) == ~p"/stats/#{slug}"
 
       conn = get(conn, ~p"/stats/#{slug}")
-      assert html_response(conn, 200) =~ "Was this your link?"
+      assert html_response(conn, 200) =~ "Here's your link:"
     end
 
     test "slug is generated automatically in controller", %{conn: conn} do
@@ -44,7 +44,7 @@ defmodule ShortLinksWeb.PageControllerTest do
       link = link_fixture()
       conn = get(conn, ~p"/stats/#{link.slug}")
 
-      assert html_response(conn, 200) =~ link.destination
+      assert html_response(conn, 200) =~ unverified_url(conn, "/#{link.slug}")
     end
 
     test "redirects to / when link is not found", %{conn: conn} do

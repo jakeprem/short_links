@@ -9,14 +9,14 @@ defmodule ShortLinks.LinkEngine do
   alias ShortLinks.LinkEngine.Link
   alias ShortLinks.Repo
 
-  @alphanumeric_characters "abcdefghijklmnopqrstuvwxyz123456789"
+  @alphanumeric_characters "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
   @doc """
   Generate a random 8 character slug to be used in a short link.
 
   Valid characters are a-z and 1-9.
   """
   def generate_slug do
-    Nanoid.generate(8, @alphanumeric_characters)
+    Nanoid.generate(8, @alphanumeric_characters) |> String.upcase()
   end
 
   @doc """
@@ -79,6 +79,7 @@ defmodule ShortLinks.LinkEngine do
       nil
   """
   def get_link_by_slug(slug) do
+    slug = String.upcase(slug)
     Repo.get_by(Link, slug: slug)
   end
 

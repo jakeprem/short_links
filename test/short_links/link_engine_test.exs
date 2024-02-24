@@ -3,11 +3,11 @@ defmodule ShortLinks.LinkEngineTest do
 
   alias ShortLinks.LinkEngine
 
-  import ShortLinks.LinkEngineFixtures, only: [link_fixture: 0]
+  import ShortLinks.LinkEngineFixtures, only: [link_fixture: 0, link_fixture: 1]
 
   describe "generate_slug/0" do
-    test "generates a random 8 character slug" do
-      assert String.match?(LinkEngine.generate_slug(), ~r/^[a-z1-9]{8}$/)
+    test "generates a random 8 character slug of uppercase, alphanumeric characters" do
+      assert String.match?(LinkEngine.generate_slug(), ~r/^[A-Z1-9]{8}$/)
     end
   end
 
@@ -64,6 +64,24 @@ defmodule ShortLinks.LinkEngineTest do
 
     test "returns nil if the link does not exist" do
       assert nil == LinkEngine.get_link(0)
+    end
+  end
+
+  describe "get_link_by_slug/1" do
+    test "returns the link with the given slug" do
+      link = link_fixture()
+
+      assert link == LinkEngine.get_link_by_slug(link.slug)
+    end
+
+    test "returns nil if the link does not exist" do
+      assert nil == LinkEngine.get_link_by_slug("not-a-slug")
+    end
+
+    test "ignores case when finding the link" do
+      link = link_fixture(%{slug: "ABCDwxyz"})
+
+      assert link == LinkEngine.get_link_by_slug(String.downcase("abcdWXYZ"))
     end
   end
 

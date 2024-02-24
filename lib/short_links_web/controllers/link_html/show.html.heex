@@ -1,1 +1,2 @@
-<.header>Was this your link?</.header> <%= @link.slug %> | <%= @link.destination %>
+<.header>Here's your link:</.header>
+<.link_for_slug conn={@conn} slug={@link.slug} />

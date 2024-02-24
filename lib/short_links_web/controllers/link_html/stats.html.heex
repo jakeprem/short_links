@@ -8,7 +8,13 @@
 </.header>
 
 <.table id="link-stats" rows={@links}>
-  <:col :let={link} label="Slug"><%= link.slug %></:col>
-  <:col :let={link} label="Destination"><%= link.destination %></:col>
+  <:col :let={link} label="Slug">
+    <.link_for_slug conn={@conn} slug={link.slug}>
+      <%= link.slug %>
+    </.link_for_slug>
+  </:col>
+  <:col :let={link} label="Destination">
+    <.link href={link.destination}><%= link.destination %></.link>
+  </:col>
   <:col :let={link} label="Visits">NYI</:col>
 </.table>

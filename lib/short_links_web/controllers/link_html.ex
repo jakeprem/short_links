@@ -10,4 +10,25 @@ defmodule ShortLinksWeb.LinkHTML do
   attr :action, :string, required: true
 
   def link_form(assigns)
+
+  attr :conn, Plug.Conn, required: true
+  attr :slug, :string, required: true
+
+  slot :inner_block, required: false
+
+  def link_for_slug(assigns) do
+    ~H"""
+    <.link href={url_for_slug(assigns.conn, assigns.slug)}>
+      <%= if @inner_block == [] do %>
+        <%= url_for_slug(assigns.conn, assigns.slug) %>
+      <% else %>
+        <%= render_slot(@inner_block) %>
+      <% end %>
+    </.link>
+    """
+  end
+
+  defp url_for_slug(conn, slug) do
+    unverified_url(conn, "/#{slug}")
+  end
 end

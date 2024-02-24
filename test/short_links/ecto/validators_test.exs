@@ -29,7 +29,8 @@ defmodule ShortLinks.Ecto.ValidatorsTest do
         "https://example.com/path/to?query=string",
         "https://example.com/path/to/?query=string",
         "https://example.com/path/to?query=string#fragment",
-        "https://example.com/path/to/?query=string#fragment"
+        "https://example.com/path/to/?query=string#fragment",
+        "https://subdomain.example.com/path/to/?query=string#fragment"
       ]
 
       for url <- valid_urls do
