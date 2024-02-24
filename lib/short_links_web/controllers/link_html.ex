@@ -31,7 +31,7 @@ defmodule ShortLinksWeb.LinkHTML do
     """
   end
 
-  defp url_for_slug(conn, slug) do
+  def url_for_slug(conn, slug) do
     unverified_url(conn, "/#{slug}")
   end
 end
