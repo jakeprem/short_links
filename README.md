@@ -110,3 +110,9 @@ execute short link (/:slug)          30.12       33.20 ms    ±25.73%       30.8
 mixed use                            16.16       61.89 ms    ±58.98%       45.59 ms      165.74 ms
 create link (post /)                  6.83      146.33 ms     ±9.92%      141.32 ms      195.00 ms
 ```
+
+### Taxon - Go Links
+[Taxon](https://github.com/jakeprem/taxon) is a similar app implementing [Go Links](https://www.trot.to/go-links#definition), that's been running for almost a year now. The code quality
+is much worse though 😁 the focus there was getting the features I needed done as quickly as possible.
+
+Go links are basically named short links you use to access common links (`go/board` -> JIRA board, `go/prs` -> Team PRs, etc)
