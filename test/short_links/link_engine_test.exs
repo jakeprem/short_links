@@ -66,4 +66,14 @@ defmodule ShortLinks.LinkEngineTest do
       assert nil == LinkEngine.get_link(0)
     end
   end
+
+  describe "list_links/0" do
+    test "returns all links" do
+      link1 = link_fixture()
+      link2 = link_fixture()
+      link3 = link_fixture()
+
+      assert [link1, link2, link3] == LinkEngine.list_links()
+    end
+  end
 end

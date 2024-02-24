@@ -64,4 +64,11 @@ defmodule ShortLinks.LinkEngine do
   def get_link(id) do
     Repo.get(Link, id)
   end
+
+  @doc """
+  List all links.
+  """
+  def list_links do
+    Repo.all(Link)
+  end
 end
