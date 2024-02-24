@@ -1,0 +1,14 @@
+<.header>
+  Link Stats
+  <:actions>
+    <.link href={~p"/"}>
+      <.button>New Link</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="link-stats" rows={@links}>
+  <:col :let={link} label="Slug"><%= link.slug %></:col>
+  <:col :let={link} label="Destination"><%= link.destination %></:col>
+  <:col :let={link} label="Visits">NYI</:col>
+</.table>

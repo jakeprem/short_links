@@ -17,7 +17,11 @@ defmodule ShortLinksWeb.Router do
   scope "/", ShortLinksWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/stats/:id", LinkController, :show
+    get "/stats", LinkController, :stats
+
+    get "/", LinkController, :new
+    post "/", LinkController, :create
   end
 
   # Other scopes may use custom stacks.
