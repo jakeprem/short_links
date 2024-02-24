@@ -1,10 +1,9 @@
 defmodule ShortLinks.LinkEngine.CSVExporterTest do
   use ShortLinks.DataCase, async: false
 
-  alias ShortLinks.LinkEngine
   alias ShortLinks.LinkEngine.CSVExporter
 
-  import ShortLinks.LinkEngineFixtures, only: [link_fixture: 0, link_fixture: 1]
+  import ShortLinks.LinkEngineFixtures, only: [link_fixture: 1]
 
   describe "get_links_csv_stream" do
     test "returns a CSV stream of links" do

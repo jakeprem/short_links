@@ -33,6 +33,18 @@ defmodule ShortLinksWeb.PageControllerTest do
       assert link.slug not in [nil, ""]
     end
 
+    test "works with query params, path, and fragment", %{conn: conn} do
+      destination_url = "http://subdomain.example.com?query=param#fragment"
+
+      conn =
+        post(conn, ~p"/", link: %{destination: destination_url})
+
+      assert %{slug: slug} = redirected_params(conn)
+
+      link = LinkEngine.get_link_by_slug(slug)
+      assert link.destination == destination_url
+    end
+
     test "returns an error if the destination is missing or malformed", %{conn: conn} do
       conn = post(conn, ~p"/", link: @invalid_attrs)
       assert html_response(conn, 200) =~ "invalid URL, no scheme given"

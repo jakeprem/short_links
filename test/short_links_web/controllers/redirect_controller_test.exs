@@ -13,6 +13,14 @@ defmodule ShortLinksWeb.RedirectControllerTest do
       assert redirected_to(conn, 302) == link.destination
     end
 
+    test "works with query params, path, and fragment", %{conn: conn} do
+      destination_url = "http://subdomain.example.com?query=param#fragment"
+      link = link_fixture(%{destination: destination_url})
+      conn = get(conn, "/#{link.slug}")
+
+      assert redirected_to(conn, 302) == destination_url
+    end
+
     test "redirects to the root path if the link is not found", %{conn: conn} do
       conn = get(conn, "/not-a-link")
 
