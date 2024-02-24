@@ -1,4 +1,9 @@
 defmodule ShortLinks.LinkEngine.Link do
+  @moduledoc """
+  The core schema representing a short link.
+  Consists of a slug, a destination and a visit count.
+  """
+
   use Ecto.Schema
 
   import Ecto.Changeset
