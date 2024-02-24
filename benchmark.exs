@@ -1,3 +1,10 @@
+# The code quality in this module is subpar. It really should be refactored,
+# and probably define a module is just defined in this file.
+# This is my first time using Benchee and I ended up having to
+# iterate quite a bit to get cookies and CSRF working with Req
+#
+# It works well enough but it is very messy.
+
 url = System.get_env("API_URL", "http://localhost:4000")
 alias ShortLinks.LinkEngine
 require Logger
@@ -41,7 +48,7 @@ create_link = fn ->
   csrf_token = fetch_csrf_w_cookie.(cookie)
 
   Req.post("#{url}/",
-    form: ["link[destination]": "https://elixir-lang.org"],
+    form: ["link[destination]": "https://jakeprem.com"],
     headers: %{"x-csrf-token" => csrf_token, "cookie" => cookie}
   )
 end
