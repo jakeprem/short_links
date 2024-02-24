@@ -61,7 +61,8 @@ defmodule ShortLinks.MixProject do
       {:nanoid, "~> 2.1"},
       {:benchee, "~> 1.0", only: :dev},
       {:req, "~> 0.4"},
-      {:nimble_csv, "~> 1.2"}
+      {:nimble_csv, "~> 1.2"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 
